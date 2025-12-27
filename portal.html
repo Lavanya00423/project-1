@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Job Portal</title>
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#f4f6f9;
+  margin:0;
+}
+
+/* Header */
+header{
+  background:#1e40af;
+  color:white;
+  text-align:center;
+  padding:20px;
+}
+
+/* Navigation */
+nav{
+  text-align:center;
+  background:#e5e7eb;
+  padding:10px;
+}
+nav button{
+  padding:8px 15px;
+  margin:5px;
+  border:none;
+  border-radius:5px;
+  background:#2563eb;
+  color:white;
+}
+
+/* Search */
+.search{
+  text-align:center;
+  margin:20px;
+}
+.search input{
+  padding:10px;
+  width:180px;
+}
+.search button{
+  padding:10px 20px;
+  background:#1e40af;
+  color:white;
+  border:none;
+  border-radius:5px;
+}
+
+/* Job Cards */
+.jobs{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+.job-card{
+  background:white;
+  padding:20px;
+  width:260px;
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+.job-card button{
+  background:#16a34a;
+  color:white;
+  border:none;
+  padding:8px 12px;
+  border-radius:5px;
+}
+
+/* Job Details */
+#details{
+  display:none;
+  background:white;
+  width:70%;
+  margin:30px auto;
+  padding:20px;
+  border-radius:10px;
+}
+
+#applyBtn{
+  background:#9ca3af;
+  padding:10px 15px;
+  color:white;
+  border:none;
+  border-radius:5px;
+}
+
+/* Recruiter */
+#recruiter{
+  display:none;
+  width:70%;
+  margin:30px auto;
+}
+.card{
+  background:white;
+  padding:20px;
+  margin:15px 0;
+  border-radius:10px;
+}
+
+footer{
+  text-align:center;
+  padding:10px;
+  background:#e5e7eb;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Job Portal</h1>
+<p>UX Research Based Job & Recruiter Flow</p>
+</header>
+
+<nav>
+<button onclick="showSeeker()">Job Seeker</button>
+<button onclick="showRecruiter()">Recruiter</button>
+</nav>
+
+<!-- JOB SEEKER -->
+<section id="seeker">
+
+<div class="search">
+<input type="text" id="searchTitle" placeholder="Job Title">
+<input type="text" id="searchLocation" placeholder="Location">
+<button onclick="searchJobs()">Search</button>
+</div>
+
+<section class="jobs" id="jobList">
+<div class="job-card" data-title="ui/ux designer" data-location="bangalore">
+<h3>UI/UX Designer</h3>
+<p>Company: ABC Tech</p>
+<p>Location: Bangalore</p>
+<button onclick="showDetails()">View Details</button>
+</div>
+
+<div class="job-card" data-title="frontend developer" data-location="chennai">
+<h3>Frontend Developer</h3>
+<p>Company: XYZ Solutions</p>
+<p>Location: Chennai</p>
+<button onclick="showDetails()">View Details</button>
+</div>
+</section>
+
+<section id="details">
+<h2>UI/UX Designer</h2>
+<p><b>Experience:</b> Fresher</p>
+<p><b>Skills:</b> Figma, UX Research</p>
+<p><b>Salary:</b> ₹4 – ₹6 LPA</p>
+
+<h3>Upload Resume</h3>
+<input type="file" id="resu
+me" onchange="enableApply()">
+<br><br>
+
+<button id="applyBtn">Upload file first</button>
+</section>
+
+</section>
+
+<!-- RECRUITER DASHBOARD -->
+<section id="recruiter">
+<h2>Recruiter Dashboard</h2>
+
+<div class="card">
+<h3>Job Posted: UI/UX Designer</h3>
+<p>Applicants: 1</p>
+<button onclick="viewApplicants()">View Applications</button>
+</div>
+
+<div class="card" id="applicant" style="display:none;">
+<h4>Applicant: Syed Sharukh</h4>
+<p>Resume Uploaded: ✅</p>
+<button>Download Resume</button>
+</div>
+
+</section>
+
+<footer>
+<p>UX Case Study – Job Portal Design</p>
+</footer>
+
+<script>
+function showDetails(){
+  document.getElementById("details").style.display="block";
+}
+
+function enableApply(){
+  const btn = document.getElementById("applyBtn");
+  btn.innerText="Apply Now";
+  btn.style.background="#2563eb";
+  btn.onclick=applyJob;
+}
+
+function applyJob(){
+  alert("✅ Application Submitted Successfully!");
+}
+
+function searchJobs(){
+  const title = document.getElementById("searchTitle").value.toLowerCase();
+  const location = document.getElementById("searchLocation").value.toLowerCase();
+  const jobs = document.querySelectorAll(".job-card");
+
+  jobs.forEach(job=>{
+    const jobTitle = job.dataset.title;
+    const jobLocation = job.dataset.location;
+
+    if(
+      (title === "" || jobTitle.includes(title)) &&
+      (location === "" || jobLocation.includes(location))
+    ){
+ 
+      job.style.display="block";
+    } else {
+      job.style.display="none";
+    }
+  });
+}
+
+function showRecruiter(){
+  document.getElementById("seeker").style.display="none";
+  document.getElementById("recruiter").style.display="block";
+}
+
+function showSeeker(){
+  document.getElementById("recruiter").style.display="none";
+  document.getElementById("seeker").style.display="block";
+}
+
+function viewApplicants(){
+  document.getElementById("applicant").style.display="block";
+}
+</script>
+</body>
+</html>
